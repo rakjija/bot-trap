@@ -13,3 +13,8 @@ DB_USER=bottrap_user
 DB_PASSWORD=<yourpassword>
 DB_NAME=bottrap_db
 ```
+
+2. 실행:
+```bash
+go run main.go
+```
