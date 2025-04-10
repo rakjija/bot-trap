@@ -10,5 +10,8 @@ bin/
 # Env
 .env
 
+# Docker
+docker-compose.yaml
+
 # VSCode
 .vscode/
