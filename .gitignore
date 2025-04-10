@@ -1,0 +1,14 @@
+# Go
+bin/
+*.exe
+*.test
+*.out
+
+# Mac
+.DS_Store
+
+# Env
+.env
+
+# VSCode
+.vscode/
