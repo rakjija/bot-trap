@@ -1,2 +1,0 @@
-# bot-trap
-bot-trap
