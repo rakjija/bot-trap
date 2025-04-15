@@ -28,3 +28,18 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/bottrap:latest
+
+    - name: Extract Git metadata
+      id: meta
+      run: |
+        echo "GIT_TAG=main-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/bottrap:latest
+          ${{ secrets.DOCKER_USERNAME }}/bottrap:${{ steps.meta.outputs.GIT_TAG }}
