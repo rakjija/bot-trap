@@ -18,5 +18,19 @@ services:
       timeout: 5s
       retries: 5
 
+  log-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: log-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_DSN: host=db user=postgres password=postgres dbname=bottrap port=5432 sslmode=disable
+    restart: always
+
 volumes:
   pgdata:
