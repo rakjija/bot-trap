@@ -23,9 +23,17 @@ var logSaveCounter = prometheus.NewCounter(
 	},
 )
 
+var logErrorCounter = prometheus.NewCounter(
+	prometheus.CounterOpts{
+		Name: "log_error_total",
+		Help: "DB 저장 실패 횟수",
+	},
+)
+
 // 메트릭 등록
 func init() {
 	prometheus.MustRegister(logSaveCounter)
+	prometheus.MustRegister(logErrorCounter)
 }
 
 func StartServer() {
@@ -44,12 +52,12 @@ func StartServer() {
 
 		// log.Printf("[LOG] IP: %s | Path: %s | Msg: %s", req.IP, req.Path, req.Message)
 		if err := db.DB.Create(&req).Error; err != nil {
+			logErrorCounter.Inc()
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to save log"})
 			return
 		}
 
 		logSaveCounter.Inc() // 로그 저장 시 메트릭 증가
-
 		c.JSON(http.StatusOK, gin.H{"status": "saved"})
 	})
 
