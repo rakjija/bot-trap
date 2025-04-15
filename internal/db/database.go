@@ -21,8 +21,9 @@ type LogEntry struct {
 func ConnectDB() {
 	dsn := os.Getenv("DB_DSN")
 	if dsn == "" {
-		dsn = "host=localhost user=postgres password=postgres dbname=bottrap port=5432 sslmode=disable"
+		dsn = "host=127.0.0.1 user=postgres password=postgres dbname=bottrap port=5432 sslmode=disable"
 	}
+	fmt.Println("📡 DB 접속 대상 DSN:", dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)

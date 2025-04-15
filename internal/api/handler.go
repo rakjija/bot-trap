@@ -1,9 +1,10 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/rakjija/bot-trap/internal/db"
 )
 
 type LogRequest struct {
@@ -20,15 +21,19 @@ func StartServer() {
 	})
 
 	r.POST("/logs", func(c *gin.Context) {
-		var req LogRequest
+		var req db.LogEntry
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		log.Printf("[LOG] IP: %s | Path: %s | Msg: %s", req.IP, req.Path, req.Message)
+		// log.Printf("[LOG] IP: %s | Path: %s | Msg: %s", req.IP, req.Path, req.Message)
+		if err := db.DB.Create(&req).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to save log"})
+			return
+		}
 
-		c.JSON(http.StatusOK, gin.H{"status": "received"})
+		c.JSON(http.StatusOK, gin.H{"status": "saved"})
 	})
 
 	r.Run(":8080")
