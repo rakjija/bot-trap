@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s # 메트릭 수집 주기
+
+scrape_configs:
+  - job_name: "log-service"
+    static_configs:
+      - targets: ["log-service:8080"] # docker compose 안에서 log-service를 내부 DNS 이름으로 호출
