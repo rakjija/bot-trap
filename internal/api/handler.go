@@ -1,11 +1,11 @@
 package api
 
 import (
+	"log"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/internal/db"
 	"github.com/rakjija/bot-trap/internal/metrics"
 )
 
@@ -16,7 +16,7 @@ type LogRequest struct {
 }
 
 func PostLogHandler(c *gin.Context) {
-	var req db.LogEntry
+	var req LogRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -29,12 +29,7 @@ func PostLogHandler(c *gin.Context) {
 		metrics.SuspiciousLogCounter.Inc()
 	}
 
-	// 로그 저장
-	if err := db.DB.Create(&req).Error; err != nil {
-		metrics.LogErrorCounter.Inc()
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to save log"})
-		return
-	}
+	log.Printf("[LOG] IP: %s | Path: %s | Msg: %s", req.IP, req.Path, req.Message)
 
 	metrics.LogSaveCounter.Inc()
 	c.JSON(http.StatusOK, gin.H{"status": "saved"})

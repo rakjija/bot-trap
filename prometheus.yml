@@ -4,4 +4,8 @@ global:
 scrape_configs:
   - job_name: "log-service"
     static_configs:
-      - targets: ["log-service:8080"] # docker compose 안에서 log-service를 내부 DNS 이름으로 호출
+      - targets: ["log-service:8080"]
+
+  - job_name: "promtail"
+    static_configs:
+      - targets: ["promtail:9080"] # Promtail은 9080 포트에서 /metrics 제공

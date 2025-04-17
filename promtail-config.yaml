@@ -1,0 +1,18 @@
+server:
+  http_listen_port: 9080 # Promtail 기본 포트
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml # 로그 수집 위치 저장 파일
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push # Loki의 push API 주소
+
+scrape_configs: # 로그 수집 대상 설정
+  - job_name: log-service
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: log-service
+          __path__: /var/lib/docker/containers/*/*.log # 수집할 로그 파일 경로

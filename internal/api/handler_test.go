@@ -7,20 +7,13 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/internal/db"
 	"github.com/rakjija/bot-trap/internal/metrics"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
+// 테스트용 라우터 설정
 func setupTestRouter() *gin.Engine {
 	r := gin.Default()
 	metrics.Init() // 메트릭 초기화
-
-	// 인메모리 DB
-	testDB, _ := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	_ = testDB.AutoMigrate(&db.LogEntry{})
-	db.DB = testDB
 
 	r.POST("/logs", PostLogHandler)
 
