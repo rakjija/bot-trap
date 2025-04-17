@@ -1,0 +1,26 @@
+name: CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Pull and run image on remote server (placeholder)
+        run: |
+          echo "배포 스크립트가 여기에 들어갑니다."
+          echo "예: ssh로 서버 접속 후 docker pull & docker run 실행"
+          echo "예: AWS CLI 또는 kubectl로 서비스 업데이트"
+
+        # ⚠️ 실제 배포를 원할 경우 아래와 같은 패턴을 참고
+        # - uses: rakjija/ssh-action@v1.0.0
+        #   with:
+        #     host: ${{ secrets.SERVER_HOST }}
+        #     username: ${{ secrets.SERVER_USER }}
+        #     key: ${{ secrets.SERVER_SSH_KEY }}
+        #     script: |
+        #       docker pull rakjija/bottrap:latest
+        #       docker stop bottrap || true
+        #       docker run -d --rm --name bottrap -p 8080:8080 rakjija/bottrap:latest
