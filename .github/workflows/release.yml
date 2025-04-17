@@ -50,3 +50,16 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
+
+      - name: Slack Notification
+        if: ${{ always() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: GitHub Action - ${{ github.workflow }}
+          SLACK_MESSAGE: |
+            🔔 *${{ github.repository }}*
+            ▸ Tag: `${{ github.ref_name }}`
+            ▸ Status: *${{ job.status }}*
+            ▸ Action: `${{ github.workflow }}`
