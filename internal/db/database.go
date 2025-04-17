@@ -2,21 +2,13 @@ package db
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
+	"os"
 )
 
 var DB *gorm.DB
-
-type LogEntry struct {
-	gorm.Model
-	IP      string
-	Path    string
-	Message string
-}
 
 func ConnectDB() {
 	dsn := os.Getenv("DB_DSN")
