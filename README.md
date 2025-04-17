@@ -1,4 +1,4 @@
-# BotTrap 🛡️
+# BotTrap 🛡️ ![GitHub release](https://img.shields.io/github/v/release/rakjija/bot-trap?style=flat-square)
 
 로그 기반 이상행동 탐지를 위한 백엔드 관찰 시스템  
 수집된 요청 로그를 저장하고, 실시간으로 모니터링하며  
