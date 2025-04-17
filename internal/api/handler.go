@@ -7,16 +7,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/internal/metrics"
+	"github.com/rakjija/bot-trap/internal/model"
 )
 
-type LogRequest struct {
-	IP      string `json:"ip"`
-	Path    string `json:"path"`
-	Message string `json:"message"`
-}
-
 func PostLogHandler(c *gin.Context) {
-	var req LogRequest
+	var req model.LogRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
