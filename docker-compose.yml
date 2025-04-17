@@ -43,7 +43,7 @@ services:
       - log-service
 
   grafana:
-    image: grafana/grafana:10.4.0
+    image: grafana/grafana:latest
     container_name: grafana
     ports:
       - "3000:3000"
