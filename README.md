@@ -1,4 +1,4 @@
-# BotTrap 🛡️ ![GitHub release](https://img.shields.io/github/v/release/rakjija/bot-trap?style=flat-square)
+# BotTrap 🛡️ ![GitHub release](https://img.shields.io/github/v/release/rakjija/bot-trap?style=flat-square) [![codecov](https://codecov.io/gh/rakjija/bot-trap/branch/main/graph/badge.svg)](https://codecov.io/gh/rakjija/bot-trap)
 
 로그 기반 이상 행동 탐지를 위한 백엔드 관찰 시스템  
 애플리케이션 로그를 Loki로 수집하고, 
