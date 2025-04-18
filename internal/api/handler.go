@@ -10,8 +10,19 @@ import (
 	"github.com/rakjija/bot-trap/internal/model"
 )
 
+// PostLogHandler
+// @Summary 로그 저장
+// @Description JSON 형식의 로그를 수신하고 저장 (stdout + metrics)
+// @Tags logs
+// @Accept json
+// @Produce json
+// @Param log body model.LogPayload true "로그 내용"
+// @Success 200 {object} map[string]string "성공 응답"
+// @Failure 400 {object} map[string]string "잘못된 요청"
+// @Failure 500 {object} map[string]string "서버 에러"
+// @Router /logs [post]
 func PostLogHandler(c *gin.Context) {
-	var req model.LogRequest
+	var req model.LogPayload
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

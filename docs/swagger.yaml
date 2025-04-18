@@ -1,0 +1,82 @@
+basePath: /
+definitions:
+  github_com_rakjija_bot-trap_internal_model.LogPayload:
+    description: JSON 형식의 로그를 수신하고 저장합니다 (stdout + metrics)
+    properties:
+      ip:
+        description: 클라이언트의 IP 주소
+        example: 192.168.0.1
+        type: string
+      message:
+        description: 의심되는 메시지
+        example: SQL injection attempt
+        type: string
+      path:
+        description: 접근한 경로
+        example: /admin
+        type: string
+    required:
+    - ip
+    - message
+    - path
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: rakjija
+    url: https://github.com/rakjija/bot-trap
+  description: 백엔드 이상 행동 탐지 시스템 API 문서입니다.
+  title: BotTrap API
+  version: "1.0"
+paths:
+  /healthz:
+    get:
+      responses:
+        "200":
+          description: 서버 정상 동작 확인
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 헬스 체크
+      tags:
+      - system
+  /logs:
+    post:
+      consumes:
+      - application/json
+      description: JSON 형식의 로그를 수신하고 저장 (stdout + metrics)
+      parameters:
+      - description: 로그 내용
+        in: body
+        name: log
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_rakjija_bot-trap_internal_model.LogPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 성공 응답
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: 잘못된 요청
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: 서버 에러
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 로그 저장
+      tags:
+      - logs
+schemes:
+- http
+swagger: "2.0"

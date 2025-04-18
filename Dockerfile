@@ -27,6 +27,7 @@ RUN apk --no-cache add ca-certificates
 # 빌드 결과 복사
 WORKDIR /root/
 COPY --from=builder /app/bot-trap .
+COPY --from=builder /app/docs ./docs
 
 # 실행 가능 여부 확인 로그
 RUN ls -al /root/
