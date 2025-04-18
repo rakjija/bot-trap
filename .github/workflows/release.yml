@@ -42,6 +42,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          platforms: linux/amd64
           tags: |
             rakjija/bottrap:${{ github.ref_name }}
             rakjija/bottrap:latest
