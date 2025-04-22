@@ -1,6 +1,35 @@
-version: '3.8'
-
 services:
+  backend:
+    container_name: bottrap-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:${BACKEND_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    volumes:
+      - .env:/app/.env:ro
+    
+  mysql:
+    container_name: bottrap-mysql
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+
   loki:
     image: grafana/loki:2.9.2
     container_name: loki
@@ -57,3 +86,4 @@ services:
 
 volumes:
   grafana-storage:
+  mysql_data:
