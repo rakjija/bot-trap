@@ -19,7 +19,7 @@ func GetPost(c *gin.Context) {
 	}
 
 	var post models.Post
-	if err := db.DB.First(&post, postID).Error; err != nil {
+	if err := db.DB.Preload("User").First(&post, postID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "post not found"})
 		return
 	}
@@ -29,6 +29,7 @@ func GetPost(c *gin.Context) {
 		Title:     post.Title,
 		Content:   post.Content,
 		UserID:    post.UserID,
+		Username:  post.User.Username,
 		CreatedAt: post.CreatedAt.Format(time.RFC3339),
 	})
 }

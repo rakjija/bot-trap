@@ -12,7 +12,7 @@ import (
 func ListPosts(c *gin.Context) {
 	var posts []models.Post
 
-	if err := db.DB.Order("created_at desc").Find(&posts).Error; err != nil {
+	if err := db.DB.Preload("User").Order("created_at desc").Find(&posts).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch posts"})
 		return
 	}
@@ -24,6 +24,7 @@ func ListPosts(c *gin.Context) {
 			Title:     p.Title,
 			Content:   p.Content,
 			UserID:    p.UserID,
+			Username:  p.User.Username,
 			CreatedAt: p.CreatedAt.Format(time.RFC3339),
 		})
 	}

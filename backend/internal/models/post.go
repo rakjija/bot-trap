@@ -11,6 +11,7 @@ type Post struct {
 	Title     string         `gorm:"type:varchar(100)" json:"title"`
 	Content   string         `gorm:"type:text" json:"content"`
 	UserID    uint           `json:"user_id"` // FK
+	User      User           `json:"user"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`

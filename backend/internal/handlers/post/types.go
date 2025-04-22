@@ -10,5 +10,6 @@ type PostResponse struct {
 	Title     string `json:"title"`
 	Content   string `json:"content"`
 	UserID    uint   `json:"user_id"`
+	Username  string `json:"username"`
 	CreatedAt string `json:"created_at"`
 }
