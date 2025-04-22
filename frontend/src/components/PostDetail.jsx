@@ -6,6 +6,7 @@ export default function PostDetail() {
   const { id } = useParams()
   const userId = localStorage.getItem('user_id')
   const navigate = useNavigate()
+
   const [post, setPost] = useState(null)
   const [error, setError] = useState(null)
 
@@ -14,6 +15,19 @@ export default function PostDetail() {
       .then(res => setPost(res.data))
       .catch(() => setError('글을 불러오지 못했습니다.'))
   }, [id])
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm('정말 삭제하시겠습니까?')
+    if (!confirmDelete) return
+
+    try {
+      await axios.delete(`/posts/${id}`)
+      navigate('/')
+    } catch (err) {
+      console.error(err)
+      alert('삭제 실패! 다시 시도해주세요.')
+    }
+  }
 
   if (error) return <p style={{ color: 'red' }}>{error}</p>
   if (!post) return <p>불러오는 중...</p>
@@ -40,12 +54,16 @@ export default function PostDetail() {
       </div>
 
       <div className="post-detail-buttons">
-        {post.user_id?.toString() === userId && (
-          <button type="button" onClick={() => navigate(`/posts/${id}/edit`)}>
-            ✏️ 수정하기
-          </button>
+        {String(post.user_id) === userId && (
+          <>
+            <button type="button" onClick={() => navigate(`/posts/${id}/edit`)}>
+              ✏️ 수정하기
+            </button>
+            <button type="button" onClick={handleDelete} style={{ backgroundColor: '#e53935' }}>
+              🗑️ 삭제하기
+            </button>
+          </>
         )}
-
         <button type="button" onClick={() => navigate('/')}>
           ← 돌아가기
         </button>
