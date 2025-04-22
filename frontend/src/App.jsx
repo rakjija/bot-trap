@@ -8,10 +8,7 @@ import PostDetail from './components/PostDetail' // ✅ 누락됐던 부분
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('access_token'))
-  const [refreshKey, setRefreshKey] = useState(0)
   const navigate = useNavigate()
-
-  const reloadPosts = () => setRefreshKey(prev => prev + 1)
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -37,7 +34,7 @@ export default function App() {
                   <button type="button" onClick={handleLogout}>로그아웃</button>
                 </div>
               )}
-              <PostList key={refreshKey} />
+              <PostList />
             </>
           }
         />
