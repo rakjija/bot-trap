@@ -15,8 +15,8 @@ func main() {
 	db.Connect()
 	db.Migrate()
 
-	utils.RegisterCustomValidators()
 	r := routes.InitRouter()
+	utils.RegisterCustomValidators()
 	r.Run(":8080")
 
 	log.Printf("[INFO] Server is running on %s..", config.Config.Server.Port)
