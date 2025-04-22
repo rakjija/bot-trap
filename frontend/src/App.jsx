@@ -56,6 +56,11 @@ export default function App() {
           path="/posts/:id"
           element={<PostDetail />}
         />
+
+        <Route
+          path="/posts/:id/edit"
+          element={isLoggedIn ? <PostForm mode="edit" /> : <Navigate to="/" />}
+        />
       </Routes>
     </div>
   )

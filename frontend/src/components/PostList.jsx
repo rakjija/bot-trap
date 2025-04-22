@@ -48,7 +48,7 @@ export default function PostList() {
                 {post.title}
               </button>
             </td>
-              <td>{post.username}</td>
+              <td>{post.user_id}</td>
               <td>{formatDate(post.created_at)}</td>
             </tr>
           ))}

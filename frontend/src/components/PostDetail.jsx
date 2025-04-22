@@ -4,6 +4,7 @@ import axios from '../api/axios'
 
 export default function PostDetail() {
   const { id } = useParams()
+  const userId = localStorage.getItem('user_id')
   const navigate = useNavigate()
   const [post, setPost] = useState(null)
   const [error, setError] = useState(null)
@@ -38,17 +39,17 @@ export default function PostDetail() {
         {post.content}
       </div>
 
-      <button type="button" onClick={() => navigate('/')} style={{
-        padding: '8px 16px',
-        backgroundColor: '#1e88e5',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        fontWeight: 'bold',
-        cursor: 'pointer'
-      }}>
-        ← 돌아가기
-      </button>
+      <div className="post-detail-buttons">
+        {post.user_id?.toString() === userId && (
+          <button type="button" onClick={() => navigate(`/posts/${id}/edit`)}>
+            ✏️ 수정하기
+          </button>
+        )}
+
+        <button type="button" onClick={() => navigate('/')}>
+          ← 돌아가기
+        </button>
+      </div>
     </div>
   )
 }

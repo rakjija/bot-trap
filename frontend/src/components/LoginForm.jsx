@@ -10,6 +10,7 @@ export default function LoginForm({ onLogin }) {
     try {
       const res = await axios.post('/users/login', { email, password })
       localStorage.setItem('access_token', res.data.access_token)
+      localStorage.setItem('user_id', res.data.user_id)
       setError(null)
       onLogin?.()
     } catch (err) {
