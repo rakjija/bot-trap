@@ -1,5 +1,6 @@
 // src/components/PostList.jsx
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import '../styles/board.css'
 
@@ -10,6 +11,7 @@ function formatDate(dateStr) {
 
 export default function PostList() {
   const [posts, setPosts] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get('/posts')
@@ -35,7 +37,17 @@ export default function PostList() {
           {posts.map((post, idx) => (
             <tr key={post.id}>
               <td>{posts.length - idx}</td>
-              <td>{post.title}</td>
+              <td>
+              <button type="button" onClick={() => navigate(`/posts/${post.id}`)}
+                style={{
+                  all: 'unset', // 스타일 초기화 (td랑 어울리게)
+                  cursor: 'pointer',
+                  color: '#1e88e5'
+                }}
+              >
+                {post.title}
+              </button>
+            </td>
               <td>{post.username}</td>
               <td>{formatDate(post.created_at)}</td>
             </tr>
