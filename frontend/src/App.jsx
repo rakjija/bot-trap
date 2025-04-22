@@ -15,6 +15,7 @@ export default function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
+    localStorage.removeItem('user_id')
     setIsLoggedIn(false)
     navigate('/')
   }
