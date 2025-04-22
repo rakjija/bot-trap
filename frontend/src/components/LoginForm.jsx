@@ -4,7 +4,7 @@ import axios from '../api/axios'
 export default function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [_, setError] = useState(null)
 
   const handleLogin = async () => {
     try {
@@ -32,7 +32,7 @@ export default function LoginForm({ onLogin }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>로그인</button>
+      <button type="button" onClick={handleLogin}>로그인</button>
     </div>
   )
 }

@@ -20,7 +20,7 @@ function App() {
       {isLoggedIn && (
         <>
           <div className="logout-container">
-            <button onClick={handleLogout}>로그아웃</button>
+            <button type="button" onClick={handleLogout}>로그아웃</button>
           </div>
           <PostForm onPostCreated={reloadPosts} />
         </>

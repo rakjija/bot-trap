@@ -32,7 +32,7 @@ export default function PostForm({ onPostCreated }) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button onClick={handleSubmit}>작성하기</button>
+      <button type="button" onClick={handleSubmit}>작성하기</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   )
