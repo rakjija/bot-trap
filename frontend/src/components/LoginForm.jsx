@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import axios from '../api/axios'
+import { useNavigate } from 'react-router-dom'
+
 
 export default function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [_, setError] = useState(null)
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     try {
@@ -21,19 +24,13 @@ export default function LoginForm({ onLogin }) {
 
   return (
     <div className="login-form">
-      <input
-        type="email"
-        placeholder="이메일"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="비밀번호"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="button" onClick={handleLogin}>로그인</button>
+
+      <div className="signup-prompt">
+        <button type="button" onClick={() => navigate('/signup')}>회원가입</button>
+      </div>
     </div>
   )
 }

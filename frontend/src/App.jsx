@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm'
 import PostList from './components/PostList'
 import PostForm from './components/PostForm'
 import PostDetail from './components/PostDetail'
+import SignupForm from './components/SignupForm'
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('access_token'))
@@ -57,6 +58,8 @@ export default function App() {
           path="/posts/:id/edit"
           element={isLoggedIn ? <PostForm mode="edit" /> : <Navigate to="/" />}
         />
+
+        <Route path="/signup" element={<SignupForm />} />
       </Routes>
     </div>
   )
