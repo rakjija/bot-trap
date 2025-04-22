@@ -1,0 +1,120 @@
+/* 로그인 폼 스타일 */
+.login-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 20px 40px;
+}
+
+.login-form input {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-form button {
+  padding: 6px 12px;
+  font-weight: bold;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #444;
+}
+
+.board-container {
+  width: 90%;
+  margin: 40px auto;
+  font-family: sans-serif;
+}
+
+.board-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.board-table th,
+.board-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.board-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.board-table tr:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.post-form input,
+.post-form textarea {
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.post-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.post-form button {
+  align-self: flex-end;
+  padding: 6px 16px;
+  font-weight: bold;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.post-form button:hover {
+  background-color: #1565c0;
+}
+
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  margin: 10px auto 0;
+}
+
+.logout-container button {
+  padding: 6px 12px;
+  background-color: #999;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-container button:hover {
+  background-color: #666;
+}
