@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test-and-build:
@@ -19,20 +19,30 @@ jobs:
         with:
           go-version: '1.24.2'
 
-      - name: Download dependencies
-        run: go mod download
+      # Backend
+      - name: Download backend dependencies
+        run: |
+          cd backend
+          go mod download
 
-      - name: Run tests with coverage
-        run: go test -coverprofile=coverage.out ./...
+      - name: Run backend tests with coverage
+        run: |
+          cd backend
+          go test -coverprofile=coverage.out ./...
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: backend/coverage.out
+          flags: backend
+          name: backend-tests
 
+      # Build
       - name: Build Docker image (test only)
         run: docker build -t bottrap:test .
 
+      # Slack
       - name: Slack Notification
         if: ${{ always() }}
         uses: rtCamp/action-slack-notify@v2
