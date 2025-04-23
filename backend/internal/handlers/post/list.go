@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/backend/internal/db"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
@@ -20,13 +21,13 @@ func ListPosts(c *gin.Context) {
 	var posts []models.Post
 
 	if err := db.DB.Preload("User").Order("created_at desc").Find(&posts).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to fetch posts"})
+		c.JSON(http.StatusInternalServerError, types.ErrorResponse{Error: "failed to fetch posts"})
 		return
 	}
 
-	var response []PostResponse
+	var response []types.PostResponse
 	for _, p := range posts {
-		response = append(response, PostResponse{
+		response = append(response, types.PostResponse{
 			ID:        p.ID,
 			Title:     p.Title,
 			Content:   p.Content,

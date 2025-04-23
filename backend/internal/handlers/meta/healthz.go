@@ -1,4 +1,4 @@
-package healthz
+package meta
 
 import "github.com/gin-gonic/gin"
 

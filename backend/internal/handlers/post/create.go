@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/backend/internal/db"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
@@ -22,15 +23,15 @@ import (
 // @Failure 500 {object} ErrorResponse
 // @Router /posts [post]
 func CreatePost(c *gin.Context) {
-	var req PostCreateRequest
+	var req types.PostCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
+		c.JSON(http.StatusBadRequest, types.ErrorResponse{Error: err.Error()})
 		return
 	}
 
 	uidVal, exists := c.Get("user_id")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, ErrorResponse{Error: "unauthorized"})
+		c.JSON(http.StatusUnauthorized, types.ErrorResponse{Error: "unauthorized"})
 		return
 	}
 	userID := uidVal.(uint)
@@ -42,11 +43,11 @@ func CreatePost(c *gin.Context) {
 	}
 
 	if err := db.DB.Create(&post).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to create post"})
+		c.JSON(http.StatusInternalServerError, types.ErrorResponse{Error: "failed to create post"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, PostResponse{
+	c.JSON(http.StatusCreated, types.PostResponse{
 		ID:        post.ID,
 		Title:     post.Title,
 		Content:   post.Content,

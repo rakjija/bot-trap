@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	docs "github.com/rakjija/bot-trap/backend/docs"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/healthz"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/meta"
 	"github.com/rakjija/bot-trap/backend/internal/middleware"
 	postRoutes "github.com/rakjija/bot-trap/backend/internal/routes/post"
 	userRoutes "github.com/rakjija/bot-trap/backend/internal/routes/user"
@@ -22,7 +22,7 @@ func InitRouter(r *gin.Engine) {
 		c.Status(200)
 	})
 
-	r.GET("/healthz", healthz.HealthzHandler)
+	r.GET("/healthz", meta.HealthzHandler)
 
 	// /api/v1
 	v1 := r.Group("/api/v1")

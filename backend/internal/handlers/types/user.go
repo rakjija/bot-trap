@@ -1,4 +1,4 @@
-package user
+package types
 
 type SignupRequest struct {
 	Email    string `json:"email" binding:"required,not_blank,min=1" example:"bob@example.com"`
@@ -23,8 +23,4 @@ type SignupResponse struct {
 type LoginResponse struct {
 	UserID      uint   `json:"user_id" example:"1"`
 	AccessToken string `json:"access_token" example:"eyJhbGciOi..."`
-}
-
-type ErrorResponse struct {
-	Error string `json:"error" example:"something went wrong"`
 }

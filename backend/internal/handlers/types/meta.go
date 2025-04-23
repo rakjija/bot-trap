@@ -1,4 +1,4 @@
-package healthz
+package types
 
 type HealthResponse struct {
 	Status string `json:"status" example:"ok"`

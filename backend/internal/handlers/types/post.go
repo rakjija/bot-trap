@@ -1,4 +1,4 @@
-package post
+package types
 
 type PostCreateRequest struct {
 	Title   string `json:"title" binding:"required,min=1" example:"title"`
@@ -12,10 +12,6 @@ type PostResponse struct {
 	UserID    uint   `json:"user_id" example:"1"`
 	Username  string `json:"username,omitempty" example:"bob (OPTIONAL)"`
 	CreatedAt string `json:"created_at" example:"2024-04-23T15:04:05Z"`
-}
-
-type ErrorResponse struct {
-	Error string `json:"error"`
 }
 
 type UnauthorizedResponse struct {

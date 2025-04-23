@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/backend/internal/db"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
@@ -23,17 +24,17 @@ func GetPost(c *gin.Context) {
 	idStr := c.Param("id")
 	postID, err := strconv.Atoi(idStr)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, ErrorResponse{Error: "invalid post ID"})
+		c.JSON(http.StatusBadRequest, types.ErrorResponse{Error: "invalid post ID"})
 		return
 	}
 
 	var post models.Post
 	if err := db.DB.Preload("User").First(&post, postID).Error; err != nil {
-		c.JSON(http.StatusNotFound, ErrorResponse{Error: "post not found"})
+		c.JSON(http.StatusNotFound, types.ErrorResponse{Error: "post not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, PostResponse{
+	c.JSON(http.StatusOK, types.PostResponse{
 		ID:        post.ID,
 		Title:     post.Title,
 		Content:   post.Content,

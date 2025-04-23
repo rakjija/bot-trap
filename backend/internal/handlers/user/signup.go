@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/backend/internal/db"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 	"github.com/rakjija/bot-trap/backend/internal/models"
 	"github.com/rakjija/bot-trap/backend/internal/utils"
 )
@@ -19,14 +20,14 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Router /users/signup [post]
 func Signup(c *gin.Context) {
-	var req SignupRequest
+	var req types.SignupRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
 	hashedPassword, err := utils.HashPassword(req.Password)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to hash password"})
+		c.JSON(http.StatusInternalServerError, types.ErrorResponse{Error: "failed to hash password"})
 		return
 	}
 
@@ -36,11 +37,11 @@ func Signup(c *gin.Context) {
 		Username: req.Username,
 	}
 	if err := db.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to create user"})
+		c.JSON(http.StatusInternalServerError, types.ErrorResponse{Error: "failed to create user"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, SignupResponse{
+	c.JSON(http.StatusCreated, types.SignupResponse{
 		UserID:  user.ID,
 		Message: "user created successfully",
 	})

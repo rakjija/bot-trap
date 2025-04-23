@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 )
 
 // @Summary Access Token 인증 확인
@@ -17,10 +18,10 @@ import (
 func Me(c *gin.Context) {
 	userIDVal, exists := c.Get("user_id")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, ErrorResponse{Error: "user_id not found in context"})
+		c.JSON(http.StatusUnauthorized, types.ErrorResponse{Error: "user_id not found in context"})
 		return
 	}
 	userID := userIDVal.(uint)
 
-	c.JSON(http.StatusOK, MeResponse{UserID: userID})
+	c.JSON(http.StatusOK, types.MeResponse{UserID: userID})
 }
