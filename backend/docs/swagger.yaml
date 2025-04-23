@@ -1,0 +1,368 @@
+basePath: /
+definitions:
+  healthz.HealthResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
+  post.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  post.PostCreateRequest:
+    properties:
+      content:
+        example: content
+        minLength: 1
+        type: string
+      title:
+        example: title
+        minLength: 1
+        type: string
+    required:
+    - content
+    - title
+    type: object
+  post.PostResponse:
+    properties:
+      content:
+        example: content
+        type: string
+      created_at:
+        example: "2024-04-23T15:04:05Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      title:
+        example: title
+        type: string
+      user_id:
+        example: 1
+        type: integer
+      username:
+        example: bob (OPTIONAL)
+        type: string
+    type: object
+  user.ErrorResponse:
+    properties:
+      error:
+        example: something went wrong
+        type: string
+    type: object
+  user.LoginRequest:
+    properties:
+      email:
+        example: bob@example.com
+        type: string
+      password:
+        example: pa55w0rd
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  user.LoginResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOi...
+        type: string
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  user.MeResponse:
+    properties:
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  user.SignupRequest:
+    properties:
+      email:
+        example: bob@example.com
+        minLength: 1
+        type: string
+      password:
+        example: pa55w0rd
+        minLength: 8
+        type: string
+      username:
+        example: bob
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  user.SignupResponse:
+    properties:
+      message:
+        example: user created successfully
+        type: string
+      user_id:
+        example: 1
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Swagger for BotTrap
+  title: BotTrap API
+  version: "1.0"
+paths:
+  /healthz:
+    get:
+      description: 서버가 정상 작동 중인지 확인합니다.
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/healthz.HealthResponse'
+      summary: 헬스 체크
+      tags:
+      - health
+  /posts:
+    get:
+      description: 전체 게시글을 최신순으로 조회합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/post.PostResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+      summary: 게시글 목록 조회
+      tags:
+      - post
+    post:
+      consumes:
+      - application/json
+      description: 인증된 사용자가 새로운 게시글을 작성합니다.
+      parameters:
+      - description: 게시글 작성 요청
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/post.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/post.PostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 게시글 작성
+      tags:
+      - post
+  /posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 게시글 작성자가 게시글을 삭제합니다.
+      parameters:
+      - description: 게시글 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 게시글 삭제
+      tags:
+      - post
+    get:
+      description: 특정 ID에 해당하는 게시글을 조회합니다.
+      parameters:
+      - description: 게시글 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.PostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+      summary: 게시글 상세 조회
+      tags:
+      - post
+    put:
+      consumes:
+      - application/json
+      description: 게시글 작성자가 제목과 내용을 수정합니다.
+      parameters:
+      - description: 게시글 ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 수정할 게시글 정보
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/post.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.PostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/post.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 게시글 수정
+      tags:
+      - post
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: 이메일과 비밀번호로 로그인합니다.
+      parameters:
+      - description: 로그인 요청
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.LoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/user.ErrorResponse'
+      summary: 로그인
+      tags:
+      - user
+  /users/me:
+    get:
+      description: Authorization 헤더의 JWT에서 user_id를 추출하여 반환합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.MeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/user.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Access Token 인증 확인
+      tags:
+      - user
+  /users/signup:
+    post:
+      consumes:
+      - application/json
+      description: 새 유저를 등록합니다.
+      parameters:
+      - description: 회원가입 요청
+        in: body
+        name: signup
+        required: true
+        schema:
+          $ref: '#/definitions/user.SignupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/user.SignupResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/user.ErrorResponse'
+      summary: 회원가입
+      tags:
+      - user
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -9,16 +9,28 @@ import (
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
+// @Summary 게시글 작성
+// @Description 인증된 사용자가 새로운 게시글을 작성합니다.
+// @Tags post
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param post body PostCreateRequest true "게시글 작성 요청"
+// @Success 201 {object} PostResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 401 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /posts [post]
 func CreatePost(c *gin.Context) {
 	var req PostCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
 		return
 	}
 
 	uidVal, exists := c.Get("user_id")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		c.JSON(http.StatusUnauthorized, ErrorResponse{Error: "unauthorized"})
 		return
 	}
 	userID := uidVal.(uint)
@@ -30,7 +42,7 @@ func CreatePost(c *gin.Context) {
 	}
 
 	if err := db.DB.Create(&post).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to create post"})
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to create post"})
 		return
 	}
 

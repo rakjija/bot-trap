@@ -10,6 +10,20 @@ import (
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
+// @Summary 게시글 수정
+// @Description 게시글 작성자가 제목과 내용을 수정합니다.
+// @Tags post
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "게시글 ID"
+// @Param post body PostCreateRequest true "수정할 게시글 정보"
+// @Success 200 {object} PostResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 403 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /posts/{id} [put]
 func UpdatePost(c *gin.Context) {
 	postID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

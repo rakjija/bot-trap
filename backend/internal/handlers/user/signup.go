@@ -9,6 +9,15 @@ import (
 	"github.com/rakjija/bot-trap/backend/internal/utils"
 )
 
+// @Summary 회원가입
+// @Description 새 유저를 등록합니다.
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param signup body SignupRequest true "회원가입 요청"
+// @Success 201 {object} SignupResponse
+// @Failure 400 {object} ErrorResponse
+// @Router /users/signup [post]
 func Signup(c *gin.Context) {
 	var req SignupRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -17,7 +26,7 @@ func Signup(c *gin.Context) {
 
 	hashedPassword, err := utils.HashPassword(req.Password)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to hash password"})
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to hash password"})
 		return
 	}
 
@@ -27,12 +36,12 @@ func Signup(c *gin.Context) {
 		Username: req.Username,
 	}
 	if err := db.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to create user"})
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to create user"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{
-		"message": "user created successfully",
-		"user_id": user.ID,
+	c.JSON(http.StatusCreated, SignupResponse{
+		UserID:  user.ID,
+		Message: "user created successfully",
 	})
 }

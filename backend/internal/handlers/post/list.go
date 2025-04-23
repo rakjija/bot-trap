@@ -9,11 +9,18 @@ import (
 	"github.com/rakjija/bot-trap/backend/internal/models"
 )
 
+// @Summary 게시글 목록 조회
+// @Description 전체 게시글을 최신순으로 조회합니다.
+// @Tags post
+// @Produce json
+// @Success 200 {array} post.PostResponse
+// @Failure 500 {object} post.ErrorResponse
+// @Router /posts [get]
 func ListPosts(c *gin.Context) {
 	var posts []models.Post
 
 	if err := db.DB.Preload("User").Order("created_at desc").Find(&posts).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch posts"})
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "failed to fetch posts"})
 		return
 	}
 
