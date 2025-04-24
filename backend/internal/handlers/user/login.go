@@ -36,13 +36,13 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateJWT(user.ID)
+	token, err := utils.GenerateJWT(user.ID, user.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, types.ErrorResponse{Error: "failed to generate token"})
 		return
 	}
 
-	utils.SendLog("info", "로그인 성공", user.Email)
+	c.Set("user_email", user.Email)
 
 	c.JSON(http.StatusOK, types.LoginResponse{
 		UserID:      user.ID,

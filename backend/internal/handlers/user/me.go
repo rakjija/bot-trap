@@ -16,12 +16,7 @@ import (
 // @Failure 401 {object} types.ErrorResponse
 // @Router /users/me [get]
 func Me(c *gin.Context) {
-	userIDVal, exists := c.Get("user_id")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, types.ErrorResponse{Error: "user_id not found in context"})
-		return
-	}
-	userID := userIDVal.(uint)
+	userID := c.MustGet("user_id").(uint)
 
 	c.JSON(http.StatusOK, types.MeResponse{UserID: userID})
 }

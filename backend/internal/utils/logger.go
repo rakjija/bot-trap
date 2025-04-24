@@ -10,14 +10,7 @@ import (
 	"github.com/rakjija/bot-trap/backend/internal/types"
 )
 
-func SendLog(level, message, user string) {
-
-	payload := types.LogPayload{
-		Level:   level,
-		Message: message,
-		User:    user,
-	}
-
+func SendStructuredLog(payload types.LogPayload) {
 	data, err := json.Marshal(payload)
 	if err != nil {
 		log.Printf("[LOGGER] 로그 직렬화 실패: %v\n", err)
@@ -31,5 +24,5 @@ func SendLog(level, message, user string) {
 	}
 	defer res.Body.Close()
 
-	log.Printf("[LOGGER] 로그 전송 완료 (%s): %s\n", level, message)
+	log.Printf("[LOGGER] 로그 전송 완료 (%s): %s\n", payload.Level, payload.Message)
 }

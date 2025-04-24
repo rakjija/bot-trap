@@ -17,6 +17,7 @@ func InitRouter(r *gin.Engine) {
 
 	// Middleware
 	r.Use(middleware.CORSMiddleware())
+	r.Use(middleware.RequestLogger())
 
 	r.OPTIONS("/*path", func(c *gin.Context) {
 		c.Status(200)

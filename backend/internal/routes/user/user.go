@@ -8,7 +8,6 @@ import (
 
 func RegisterUserRoutes(rg *gin.RouterGroup) {
 	user := rg.Group("/users")
-
 	user.POST("/signup", handler.Signup)
 	user.POST("/login", handler.Login)
 

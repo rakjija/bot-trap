@@ -29,13 +29,7 @@ func CreatePost(c *gin.Context) {
 		return
 	}
 
-	uidVal, exists := c.Get("user_id")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, types.ErrorResponse{Error: "unauthorized"})
-		return
-	}
-	userID := uidVal.(uint)
-
+	userID := c.MustGet("user_id").(uint)
 	post := models.Post{
 		Title:   req.Title,
 		Content: req.Content,
