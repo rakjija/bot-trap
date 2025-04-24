@@ -19,7 +19,7 @@ func HandleLog(c *gin.Context) {
 
 	entry.Timestamp = time.Now().Format(time.RFC3339)
 
-	file, err := os.OpenFile("data/logs.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("/app/logs/logs.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot write log"})
 		return

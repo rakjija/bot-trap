@@ -1,2 +1,7 @@
 {"level": "info", "message": "hello", "user": "minjae"}
-{"level": "warn", "message": "watch out", "user": "rakjija"}
+{"level": "warn", "message": "watch out", "user": "rakjija"}{"timestamp":"2025-04-24T04:11:48Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}
+{"timestamp":"2025-04-24T04:15:53Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}
+{"timestamp":"2025-04-24T04:16:12Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}
+{"timestamp":"2025-04-24T04:16:13Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}
+{"timestamp":"2025-04-24T04:16:13Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}
+{"timestamp":"2025-04-24T04:16:14Z","level":"info","service":"","method":"","path":"","ip":"","message":"로그인 성공"}

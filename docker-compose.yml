@@ -40,11 +40,12 @@ services:
     restart: unless-stopped
 
   observer:
+    container_name: bottrap-observer
     build:
       context: ./observer
       dockerfile: Dockerfile
     volumes:
-      - ./observer/data:/app/data
+      - ./observer/logs:/app/logs
     ports:
       - '9000:9000'
 

@@ -42,6 +42,8 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	utils.SendLog("info", "로그인 성공", user.Email)
+
 	c.JSON(http.StatusOK, types.LoginResponse{
 		UserID:      user.ID,
 		AccessToken: token,

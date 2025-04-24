@@ -11,6 +11,7 @@ import (
 type AppConfig struct {
 	DB     DBConfig
 	Server ServerConfig
+	Log    LogConfig
 }
 
 type DBConfig struct {
@@ -23,6 +24,10 @@ type DBConfig struct {
 
 type ServerConfig struct {
 	Port string
+}
+
+type LogConfig struct {
+	Endpoint string
 }
 
 var Config AppConfig
@@ -45,6 +50,9 @@ func LoadConfig() {
 		Server: ServerConfig{
 			Port: getEnv("BACKEND_PORT", "8080"),
 		},
+		Log: LogConfig{
+			Endpoint: getEnv("OBSERVER_ENDPOINT", "http://localhost:9090"),
+		},
 	}
 }
 
@@ -52,5 +60,6 @@ func getEnv(key string, fallback string) string {
 	if val, exists := os.LookupEnv(key); exists {
 		return val
 	}
+	log.Printf("[INFO] 환경변수 %s 가 없어 기본값 %s 를 사용합니다.", key, fallback)
 	return fallback
 }

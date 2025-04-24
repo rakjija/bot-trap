@@ -8,7 +8,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o observer ./cmd/main.go
 FROM ubuntu:24.04
 WORKDIR /root
 COPY --from=builder /app/observer .
-COPY data ./data
+COPY logs ./logs
 
 EXPOSE 9000
 CMD ["./observer"]
