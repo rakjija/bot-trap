@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
+	"github.com/rakjija/bot-trap/backend/internal/types"
 )
 
 // @Summary Access Token 인증 확인

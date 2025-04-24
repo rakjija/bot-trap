@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 	"github.com/rakjija/bot-trap/backend/internal/models"
+	"github.com/rakjija/bot-trap/backend/internal/types"
 )
 
 // @Summary 게시글 목록 조회
