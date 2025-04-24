@@ -29,7 +29,7 @@ func RequestLogger() gin.HandlerFunc {
 
 		log := types.LogPayload{
 			Timestamp: start.Format(time.RFC3339),
-			Duration:  duration.String(),
+			Duration:  duration.Seconds(),
 			Level:     level,
 			Service:   "backend",
 			Method:    c.Request.Method,
