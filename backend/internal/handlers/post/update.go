@@ -13,7 +13,7 @@ import (
 
 // @Summary 게시글 수정
 // @Description 게시글 작성자가 제목과 내용을 수정합니다.
-// @Tags post
+// @Tags posts
 // @Accept json
 // @Produce json
 // @Security BearerAuth

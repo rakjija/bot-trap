@@ -12,7 +12,7 @@ import (
 
 // @Summary 게시글 삭제
 // @Description 게시글 작성자가 게시글을 삭제합니다.
-// @Tags post
+// @Tags posts
 // @Accept json
 // @Produce json
 // @Security BearerAuth

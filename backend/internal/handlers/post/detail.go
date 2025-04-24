@@ -13,7 +13,7 @@ import (
 
 // @Summary 게시글 상세 조회
 // @Description 특정 ID에 해당하는 게시글을 조회합니다.
-// @Tags post
+// @Tags posts
 // @Produce json
 // @Param id path int true "게시글 ID"
 // @Success 200 {object} types.PostResponse

@@ -12,7 +12,7 @@ import (
 
 // @Summary 게시글 작성
 // @Description 인증된 사용자가 새로운 게시글을 작성합니다.
-// @Tags post
+// @Tags posts
 // @Accept json
 // @Produce json
 // @Security BearerAuth

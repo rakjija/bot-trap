@@ -12,7 +12,7 @@ import (
 
 // @Summary 회원가입
 // @Description 새 유저를 등록합니다.
-// @Tags user
+// @Tags users
 // @Accept json
 // @Produce json
 // @Param signup body types.SignupRequest true "회원가입 요청"

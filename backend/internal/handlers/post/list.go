@@ -12,7 +12,7 @@ import (
 
 // @Summary 게시글 목록 조회
 // @Description 전체 게시글을 최신순으로 조회합니다.
-// @Tags post
+// @Tags posts
 // @Produce json
 // @Success 200 {array} types.PostResponse
 // @Failure 500 {object} types.ErrorResponse
