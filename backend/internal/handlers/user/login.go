@@ -15,9 +15,9 @@ import (
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param login body LoginRequest true "로그인 요청"
-// @Success 200 {object} LoginResponse
-// @Failure 401 {object} ErrorResponse
+// @Param login body types.LoginRequest true "로그인 요청"
+// @Success 200 {object} types.LoginResponse
+// @Failure 401 {object} types.ErrorResponse
 // @Router /users/login [post]
 func Login(c *gin.Context) {
 	var req types.LoginRequest

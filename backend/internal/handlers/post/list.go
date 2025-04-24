@@ -14,8 +14,8 @@ import (
 // @Description 전체 게시글을 최신순으로 조회합니다.
 // @Tags post
 // @Produce json
-// @Success 200 {array} post.PostResponse
-// @Failure 500 {object} post.ErrorResponse
+// @Success 200 {array} types.PostResponse
+// @Failure 500 {object} types.ErrorResponse
 // @Router /posts [get]
 func ListPosts(c *gin.Context) {
 	var posts []models.Post

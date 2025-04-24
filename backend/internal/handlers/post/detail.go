@@ -16,9 +16,9 @@ import (
 // @Tags post
 // @Produce json
 // @Param id path int true "게시글 ID"
-// @Success 200 {object} post.PostResponse
-// @Failure 400 {object} post.ErrorResponse
-// @Failure 404 {object} post.ErrorResponse
+// @Success 200 {object} types.PostResponse
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 404 {object} types.ErrorResponse
 // @Router /posts/{id} [get]
 func GetPost(c *gin.Context) {
 	idStr := c.Param("id")

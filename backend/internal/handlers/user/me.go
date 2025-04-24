@@ -12,8 +12,8 @@ import (
 // @Tags user
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} MeResponse
-// @Failure 401 {object} ErrorResponse
+// @Success 200 {object} types.MeResponse
+// @Failure 401 {object} types.ErrorResponse
 // @Router /users/me [get]
 func Me(c *gin.Context) {
 	userIDVal, exists := c.Get("user_id")

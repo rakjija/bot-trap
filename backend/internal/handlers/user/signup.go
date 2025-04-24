@@ -15,9 +15,9 @@ import (
 // @Tags user
 // @Accept json
 // @Produce json
-// @Param signup body SignupRequest true "회원가입 요청"
-// @Success 201 {object} SignupResponse
-// @Failure 400 {object} ErrorResponse
+// @Param signup body types.SignupRequest true "회원가입 요청"
+// @Success 201 {object} types.SignupResponse
+// @Failure 400 {object} types.ErrorResponse
 // @Router /users/signup [post]
 func Signup(c *gin.Context) {
 	var req types.SignupRequest

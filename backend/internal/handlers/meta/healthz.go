@@ -2,14 +2,13 @@ package meta
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/types"
 )
 
 // @Summary 헬스 체크
 // @Description 서버가 정상 작동 중인지 확인합니다.
 // @Tags health
-// @Success 200  {object}  HealthResponse
+// @Success 200  {object}  map[string]string
 // @Router /healthz [get]
 func HealthzHandler(c *gin.Context) {
-	c.JSON(200, types.HealthResponse{Status: "ok"})
+	c.JSON(200, gin.H{"status": "ok"})
 }

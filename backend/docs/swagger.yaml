@@ -1,17 +1,39 @@
 basePath: /
 definitions:
-  healthz.HealthResponse:
-    properties:
-      status:
-        example: ok
-        type: string
-    type: object
-  post.ErrorResponse:
+  types.ErrorResponse:
     properties:
       error:
+        example: something went wrong
         type: string
     type: object
-  post.PostCreateRequest:
+  types.LoginRequest:
+    properties:
+      email:
+        example: bob@example.com
+        type: string
+      password:
+        example: pa55w0rd
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  types.LoginResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOi...
+        type: string
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  types.MeResponse:
+    properties:
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  types.PostCreateRequest:
     properties:
       content:
         example: content
@@ -25,7 +47,7 @@ definitions:
     - content
     - title
     type: object
-  post.PostResponse:
+  types.PostResponse:
     properties:
       content:
         example: content
@@ -46,40 +68,7 @@ definitions:
         example: bob (OPTIONAL)
         type: string
     type: object
-  user.ErrorResponse:
-    properties:
-      error:
-        example: something went wrong
-        type: string
-    type: object
-  user.LoginRequest:
-    properties:
-      email:
-        example: bob@example.com
-        type: string
-      password:
-        example: pa55w0rd
-        type: string
-    required:
-    - email
-    - password
-    type: object
-  user.LoginResponse:
-    properties:
-      access_token:
-        example: eyJhbGciOi...
-        type: string
-      user_id:
-        example: 1
-        type: integer
-    type: object
-  user.MeResponse:
-    properties:
-      user_id:
-        example: 1
-        type: integer
-    type: object
-  user.SignupRequest:
+  types.SignupRequest:
     properties:
       email:
         example: bob@example.com
@@ -97,7 +86,7 @@ definitions:
     - password
     - username
     type: object
-  user.SignupResponse:
+  types.SignupResponse:
     properties:
       message:
         example: user created successfully
@@ -120,7 +109,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/healthz.HealthResponse'
+            additionalProperties:
+              type: string
+            type: object
       summary: 헬스 체크
       tags:
       - health
@@ -134,12 +125,12 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/post.PostResponse'
+              $ref: '#/definitions/types.PostResponse'
             type: array
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       summary: 게시글 목록 조회
       tags:
       - post
@@ -153,26 +144,26 @@ paths:
         name: post
         required: true
         schema:
-          $ref: '#/definitions/post.PostCreateRequest'
+          $ref: '#/definitions/types.PostCreateRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/post.PostResponse'
+            $ref: '#/definitions/types.PostResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       security:
       - BearerAuth: []
       summary: 게시글 작성
@@ -201,19 +192,19 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       security:
       - BearerAuth: []
       summary: 게시글 삭제
@@ -233,15 +224,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/post.PostResponse'
+            $ref: '#/definitions/types.PostResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       summary: 게시글 상세 조회
       tags:
       - post
@@ -260,30 +251,30 @@ paths:
         name: post
         required: true
         schema:
-          $ref: '#/definitions/post.PostCreateRequest'
+          $ref: '#/definitions/types.PostCreateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/post.PostResponse'
+            $ref: '#/definitions/types.PostResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/post.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       security:
       - BearerAuth: []
       summary: 게시글 수정
@@ -300,21 +291,21 @@ paths:
         name: login
         required: true
         schema:
-          $ref: '#/definitions/user.LoginRequest'
+          $ref: '#/definitions/types.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.LoginResponse'
+            $ref: '#/definitions/types.LoginResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/user.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       summary: 로그인
       tags:
-      - user
+      - users
   /users/me:
     get:
       description: Authorization 헤더의 JWT에서 user_id를 추출하여 반환합니다.
@@ -324,11 +315,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.MeResponse'
+            $ref: '#/definitions/types.MeResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/user.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       security:
       - BearerAuth: []
       summary: Access Token 인증 확인
@@ -345,18 +336,18 @@ paths:
         name: signup
         required: true
         schema:
-          $ref: '#/definitions/user.SignupRequest'
+          $ref: '#/definitions/types.SignupRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/user.SignupResponse'
+            $ref: '#/definitions/types.SignupResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/user.ErrorResponse'
+            $ref: '#/definitions/types.ErrorResponse'
       summary: 회원가입
       tags:
       - user

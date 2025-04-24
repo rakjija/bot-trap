@@ -16,11 +16,11 @@ import (
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param post body PostCreateRequest true "게시글 작성 요청"
-// @Success 201 {object} PostResponse
-// @Failure 400 {object} ErrorResponse
-// @Failure 401 {object} ErrorResponse
-// @Failure 500 {object} ErrorResponse
+// @Param post body types.PostCreateRequest true "게시글 작성 요청"
+// @Success 201 {object} types.PostResponse
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 401 {object} types.ErrorResponse
+// @Failure 500 {object} types.ErrorResponse
 // @Router /posts [post]
 func CreatePost(c *gin.Context) {
 	var req types.PostCreateRequest

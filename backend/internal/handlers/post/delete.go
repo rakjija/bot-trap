@@ -18,10 +18,10 @@ import (
 // @Security BearerAuth
 // @Param id path int true "게시글 ID"
 // @Success 200 {object} map[string]string
-// @Failure 400 {object} ErrorResponse
-// @Failure 403 {object} ErrorResponse
-// @Failure 404 {object} ErrorResponse
-// @Failure 500 {object} ErrorResponse
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 403 {object} types.ErrorResponse
+// @Failure 404 {object} types.ErrorResponse
+// @Failure 500 {object} types.ErrorResponse
 // @Router /posts/{id} [delete]
 func DeletePost(c *gin.Context) {
 	postID, err := strconv.Atoi(c.Param("id"))

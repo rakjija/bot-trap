@@ -18,12 +18,12 @@ import (
 // @Produce json
 // @Security BearerAuth
 // @Param id path int true "게시글 ID"
-// @Param post body PostCreateRequest true "수정할 게시글 정보"
-// @Success 200 {object} PostResponse
-// @Failure 400 {object} ErrorResponse
-// @Failure 403 {object} ErrorResponse
-// @Failure 404 {object} ErrorResponse
-// @Failure 500 {object} ErrorResponse
+// @Param post body types.PostCreateRequest true "수정할 게시글 정보"
+// @Success 200 {object} types.PostResponse
+// @Failure 400 {object} types.ErrorResponse
+// @Failure 403 {object} types.ErrorResponse
+// @Failure 404 {object} types.ErrorResponse
+// @Failure 500 {object} types.ErrorResponse
 // @Router /posts/{id} [put]
 func UpdatePost(c *gin.Context) {
 	postID, err := strconv.Atoi(c.Param("id"))
