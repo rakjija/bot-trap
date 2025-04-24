@@ -7,8 +7,9 @@ on:
     branches: [main]
 
 jobs:
-  test-and-build:
+  backend:
     runs-on: ubuntu-latest
+    name: Backend Test & Build
 
     steps:
       - name: Checkout code
@@ -19,39 +20,76 @@ jobs:
         with:
           go-version: '1.24.2'
 
-      # Backend
-      - name: Download backend dependencies
+      - name: Download dependencies
         run: |
           cd backend
           go mod download
 
-      - name: Run backend tests with coverage
+      - name: Run tests with coverage
         run: |
           cd backend
-          go test -coverprofile=backend-coverage.out -coverpkg=./internal/... ./internal/tests/...
+          go test -coverprofile=coverage.out -coverpkg=./internal/... ./internal/tests/...
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: backend-coverage.out
+          files: backend/coverage.out
           flags: backend
           name: backend-tests
 
-      # Build
       - name: Build Docker image (test only)
-        run: docker build -t bottrap:test -f backend/Dockerfile backend
+        run: docker build -t backend:test -f backend/Dockerfile backend
 
-      # Slack
-      - name: Slack Notification
-        if: ${{ always() }}
+  observer:
+    runs-on: ubuntu-latest
+    name: Observer Test & Build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.2'
+
+      - name: Download dependencies
+        run: |
+          cd observer
+          go mod download
+
+      # - name: Run tests with coverage
+      #   run: |
+      #     cd observer
+      #     go test -coverprofile=coverage.out ./...
+
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: observer/coverage.out
+      #     flags: observer
+      #     name: observer-tests
+
+      - name: Build Docker image (test only)
+        run: docker build -t observer:test -f observer/Dockerfile observer
+
+  slack:
+    name: Slack Notification
+    needs: [backend, observer]
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
+      - name: Notify Slack
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ job.status }}
           SLACK_TITLE: GitHub Action - ${{ github.workflow }}
           SLACK_MESSAGE: |
-            🔔 *${{ github.repository }}*
-            ▸ Branch: `${{ github.ref_name }}`
-            ▸ Status: *${{ job.status }}*
-            ▸ Action: `${{ github.workflow }}`
+            🔔 CI 결과
+            - Repository: *${{ github.repository }}*
+            - Branch: `${{ github.ref_name }}`
+            - Result: *${{ job.status }}*
+            - Components: `Backend`, `Observer`
