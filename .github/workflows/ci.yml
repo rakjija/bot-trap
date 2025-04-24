@@ -40,7 +40,7 @@ jobs:
 
       # Build
       - name: Build Docker image (test only)
-        run: docker build -t bottrap:test .
+        run: docker build -t bottrap:test -f backend/Dockerfile backend
 
       # Slack
       - name: Slack Notification
