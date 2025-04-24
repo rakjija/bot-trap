@@ -4,17 +4,17 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:80"
+      - '3000:80'
     depends_on:
       - backend
-      
+
   backend:
     container_name: bottrap-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8080:${BACKEND_PORT}"
+      - '8080:${BACKEND_PORT}'
     env_file:
       - .env
     depends_on:
@@ -22,12 +22,12 @@ services:
     restart: unless-stopped
     volumes:
       - .env:/app/.env:ro
-    
+
   mysql:
     container_name: bottrap-mysql
     image: mysql:8.0
     ports:
-      - "3306:3306"
+      - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
@@ -39,60 +39,45 @@ services:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: unless-stopped
 
-  loki:
-    image: grafana/loki:2.9.2
-    container_name: loki
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
-
-  promtail:
-    image: grafana/promtail:2.9.2
-    container_name: promtail
-    volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro # :ro - 읽기 전용으로 마운트 -> 안정성 확보
-      - /var/log:/var/log # 시스템 로그 (Promtail 기본값으로 종종 사용됨)
-      - ./promtail-config.yaml:/etc/promtail/config.yaml
-    command: -config.file=/etc/promtail/config.yaml
-    depends_on:
-      - loki
-
-  log-service:
+  observer:
     build:
-      context: .
+      context: ./observer
       dockerfile: Dockerfile
-    container_name: log-service
-    ports:
-      - "8080:8080"
-    restart: always
-    logging:
-      driver: "json-file"
-    depends_on:
-      - loki
-
-  prometheus:
-    image: prom/prometheus:v2.52.0
-    container_name: prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./observer/data:/app/data
     ports:
-      - "9090:9090"
-    depends_on:
-      - log-service
+      - '9000:9000'
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
+    container_name: bottrap-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
     ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
+      - '9200:9200'
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.12.1
+    container_name: bottrap-logstash
     volumes:
-      - grafana-storage:/var/lib/grafana
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./observer/logstash/pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./observer/logs:/usr/share/logstash/logs
+    ports:
+      - '5044:5044'
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.12.1
+    container_name: bottrap-kibana
+    ports:
+      - '5601:5601'
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
 
 volumes:
-  grafana-storage:
   mysql_data:
