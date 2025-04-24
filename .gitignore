@@ -1,6 +1,11 @@
+# 테스트 커버리지 결과
 coverage.out
+
+# 환경 설정 파일
 .env
 
+# IDE 설정
 .idea
 
+# Node.js
 node_modules/
