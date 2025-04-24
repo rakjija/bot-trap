@@ -18,10 +18,13 @@ func RequestLogger() gin.HandlerFunc {
 		status := c.Writer.Status()
 
 		level := "info"
+		msg := "Request completed"
 		if status >= 500 {
 			level = "error"
+			msg = "Internal server error"
 		} else if status >= 400 {
 			level = "warn"
+			msg = "Client error occurred"
 		}
 
 		log := types.LogPayload{
@@ -34,7 +37,7 @@ func RequestLogger() gin.HandlerFunc {
 			Status:    status,
 			IP:        c.ClientIP(),
 			UserAgent: c.Request.UserAgent(),
-			Message:   "요청 처리 완료",
+			Message:   msg,
 			User:      "anonymous",
 		}
 
