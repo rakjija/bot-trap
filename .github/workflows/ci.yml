@@ -113,7 +113,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_TITLE: GitHub Action - ${{ github.workflow }}
           SLACK_MESSAGE: |
-            🔔 CI 결과
+            🔔 *GoBoard CI*
             - Repository: *${{ github.repository }}*
             - Branch: `${{ github.ref_name }}`
             - Commit: `${{ github.event.head_commit.message }}`
