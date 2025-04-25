@@ -119,5 +119,5 @@ jobs:
             - Commit: `${{ github.event.head_commit.message }}`
             - Result: *${{ job.status }}*
             - Components:
-              - Backend: ✅ Success
-              - Observer: ❌ Failure
+              - Backend: ${{ needs.backend.outputs.result }}
+              - Observer: ${{ needs.observer.outputs.result }}
