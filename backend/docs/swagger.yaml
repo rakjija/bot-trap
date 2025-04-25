@@ -98,8 +98,8 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: Swagger for BotTrap
-  title: BotTrap API
+  description: Swagger for GoBoard
+  title: GoBoard API
   version: "1.0"
 paths:
   /healthz:
@@ -133,7 +133,7 @@ paths:
             $ref: '#/definitions/types.ErrorResponse'
       summary: 게시글 목록 조회
       tags:
-      - post
+      - posts
     post:
       consumes:
       - application/json
@@ -168,7 +168,7 @@ paths:
       - BearerAuth: []
       summary: 게시글 작성
       tags:
-      - post
+      - posts
   /posts/{id}:
     delete:
       consumes:
@@ -209,7 +209,7 @@ paths:
       - BearerAuth: []
       summary: 게시글 삭제
       tags:
-      - post
+      - posts
     get:
       description: 특정 ID에 해당하는 게시글을 조회합니다.
       parameters:
@@ -235,7 +235,7 @@ paths:
             $ref: '#/definitions/types.ErrorResponse'
       summary: 게시글 상세 조회
       tags:
-      - post
+      - posts
     put:
       consumes:
       - application/json
@@ -279,7 +279,7 @@ paths:
       - BearerAuth: []
       summary: 게시글 수정
       tags:
-      - post
+      - posts
   /users/login:
     post:
       consumes:
@@ -324,7 +324,7 @@ paths:
       - BearerAuth: []
       summary: Access Token 인증 확인
       tags:
-      - user
+      - users
   /users/signup:
     post:
       consumes:
@@ -350,7 +350,7 @@ paths:
             $ref: '#/definitions/types.ErrorResponse'
       summary: 회원가입
       tags:
-      - user
+      - users
 securityDefinitions:
   BearerAuth:
     in: header

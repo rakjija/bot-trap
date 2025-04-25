@@ -21,6 +21,6 @@ jobs:
         #     username: ${{ secrets.SERVER_USER }}
         #     key: ${{ secrets.SERVER_SSH_KEY }}
         #     script: |
-        #       docker pull rakjija/bottrap:latest
-        #       docker stop bottrap || true
-        #       docker run -d --rm --name bottrap -p 8080:8080 rakjija/bottrap:latest
+        #       docker pull rakjija/goboard:latest
+        #       docker stop goboard || true
+        #       docker run -d --rm --name goboard -p 8080:8080 rakjija/goboard:latest

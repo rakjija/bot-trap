@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/types"
-	"github.com/rakjija/bot-trap/backend/internal/utils"
+	"github.com/rakjija/go-board/backend/internal/types"
+	"github.com/rakjija/go-board/backend/internal/utils"
 )
 
 func RequestLogger() gin.HandlerFunc {

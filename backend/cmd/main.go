@@ -4,15 +4,15 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/config"
-	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/routes"
-	"github.com/rakjija/bot-trap/backend/internal/utils"
+	"github.com/rakjija/go-board/backend/internal/config"
+	"github.com/rakjija/go-board/backend/internal/db"
+	"github.com/rakjija/go-board/backend/internal/routes"
+	"github.com/rakjija/go-board/backend/internal/utils"
 )
 
-// @title BotTrap API
+// @title GoBoard API
 // @version 1.0
-// @description Swagger for BotTrap
+// @description Swagger for GoBoard
 
 // @host localhost:8080
 // @BasePath /

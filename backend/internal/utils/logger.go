@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rakjija/bot-trap/backend/internal/config"
-	"github.com/rakjija/bot-trap/backend/internal/types"
+	"github.com/rakjija/go-board/backend/internal/config"
+	"github.com/rakjija/go-board/backend/internal/types"
 )
 
 func SendStructuredLog(payload types.LogPayload) {

@@ -1,9 +1,9 @@
 package common
 
 import (
-	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/models"
-	"github.com/rakjija/bot-trap/backend/internal/utils"
+	"github.com/rakjija/go-board/backend/internal/db"
+	"github.com/rakjija/go-board/backend/internal/models"
+	"github.com/rakjija/go-board/backend/internal/utils"
 )
 
 func CreateTestUser() {

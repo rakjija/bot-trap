@@ -1,1 +1,1 @@
-USE bottrap_board;
+USE goboard_board;

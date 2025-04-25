@@ -2,8 +2,8 @@ package common
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/post"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/user"
+	"github.com/rakjija/go-board/backend/internal/handlers/post"
+	"github.com/rakjija/go-board/backend/internal/handlers/user"
 )
 
 func SetupTestRouter() *gin.Engine {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/rakjija/bot-trap/backend/internal/config"
+	"github.com/rakjija/go-board/backend/internal/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

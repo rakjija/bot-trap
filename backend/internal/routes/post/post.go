@@ -2,8 +2,8 @@ package post
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/handlers/post"
-	"github.com/rakjija/bot-trap/backend/internal/middleware"
+	"github.com/rakjija/go-board/backend/internal/handlers/post"
+	"github.com/rakjija/go-board/backend/internal/middleware"
 )
 
 func RegisterPostRoutes(rg *gin.RouterGroup) {

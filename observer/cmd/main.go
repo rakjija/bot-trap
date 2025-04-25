@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/observer/internal/routes"
+	"github.com/rakjija/go-board/observer/internal/routes"
 )
 
 func main() {

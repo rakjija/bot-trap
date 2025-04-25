@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/models"
-	"github.com/rakjija/bot-trap/backend/internal/types"
-	"github.com/rakjija/bot-trap/backend/internal/utils"
+	"github.com/rakjija/go-board/backend/internal/db"
+	"github.com/rakjija/go-board/backend/internal/models"
+	"github.com/rakjija/go-board/backend/internal/types"
+	"github.com/rakjija/go-board/backend/internal/utils"
 )
 
 // @Summary 회원가입

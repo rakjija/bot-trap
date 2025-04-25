@@ -11,4 +11,4 @@ test:
 .PHONY: docker
 docker:
 	@echo "\n$(shell tput setaf 3)🐳 Building Docker Image...$(shell tput sgr0)"
-	@docker build -t bottrap:test .
+	@docker build -t goboard:test .

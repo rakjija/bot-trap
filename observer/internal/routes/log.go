@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/observer/internal/models"
+	"github.com/rakjija/go-board/observer/internal/models"
 )
 
 func HandleLog(c *gin.Context) {

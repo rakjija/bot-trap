@@ -1,4 +1,4 @@
-module github.com/rakjija/bot-trap/backend
+module github.com/rakjija/go-board/backend
 
 go 1.24.2
 

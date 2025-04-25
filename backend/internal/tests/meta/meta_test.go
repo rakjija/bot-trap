@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/rakjija/bot-trap/backend/internal/handlers/meta"
+	"github.com/rakjija/go-board/backend/internal/handlers/meta"
 	"github.com/stretchr/testify/assert"
 )
 

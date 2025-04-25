@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/models"
-	"github.com/rakjija/bot-trap/backend/internal/types"
+	"github.com/rakjija/go-board/backend/internal/db"
+	"github.com/rakjija/go-board/backend/internal/models"
+	"github.com/rakjija/go-board/backend/internal/types"
 )
 
 // @Summary 게시글 삭제

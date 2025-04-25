@@ -42,7 +42,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 목록 조회",
                 "responses": {
@@ -77,7 +77,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 작성",
                 "parameters": [
@@ -126,7 +126,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 상세 조회",
                 "parameters": [
@@ -173,7 +173,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 수정",
                 "parameters": [
@@ -241,7 +241,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 삭제",
                 "parameters": [
@@ -342,7 +342,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "Access Token 인증 확인",
                 "responses": {
@@ -371,7 +371,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "회원가입",
                 "parameters": [
@@ -552,8 +552,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "BotTrap API",
-	Description:      "Swagger for BotTrap",
+	Title:            "GoBoard API",
+	Description:      "Swagger for GoBoard",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

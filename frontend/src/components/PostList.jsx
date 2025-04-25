@@ -23,7 +23,7 @@ export default function PostList() {
 
   return (
     <div className="board-container">
-      <h2 className="board-title">BotTrap Board</h2>
+      <h2 className="board-title">GoBoard</h2>
       <table className="board-table">
         <thead>
           <tr>

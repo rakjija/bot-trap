@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/rakjija/bot-trap/backend/internal/tests/common"
+	"github.com/rakjija/go-board/backend/internal/tests/common"
 	"github.com/stretchr/testify/assert"
 )
 

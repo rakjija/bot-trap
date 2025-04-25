@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: write  # GitHub Release 생성을 위한 권한
+  contents: write # GitHub Release 생성을 위한 권한
 
 jobs:
   release:
@@ -44,8 +44,8 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            rakjija/bottrap:${{ github.ref_name }}
-            rakjija/bottrap:latest
+            rakjija/goboard:${{ github.ref_name }}
+            rakjija/goboard:latest
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

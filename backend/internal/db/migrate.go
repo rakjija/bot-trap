@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"github.com/rakjija/bot-trap/backend/internal/models"
+	"github.com/rakjija/go-board/backend/internal/models"
 )
 
 func Migrate() {

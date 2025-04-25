@@ -3,8 +3,8 @@ package common
 import (
 	"fmt"
 
-	"github.com/rakjija/bot-trap/backend/internal/db"
-	"github.com/rakjija/bot-trap/backend/internal/models"
+	"github.com/rakjija/go-board/backend/internal/db"
+	"github.com/rakjija/go-board/backend/internal/models"
 )
 
 func CreateTestPost(n int) {

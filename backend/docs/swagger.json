@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Swagger for BotTrap",
-        "title": "BotTrap API",
+        "description": "Swagger for GoBoard",
+        "title": "GoBoard API",
         "contact": {},
         "version": "1.0"
     },
@@ -36,7 +36,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 목록 조회",
                 "responses": {
@@ -71,7 +71,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 작성",
                 "parameters": [
@@ -120,7 +120,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 상세 조회",
                 "parameters": [
@@ -167,7 +167,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 수정",
                 "parameters": [
@@ -235,7 +235,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "post"
+                    "posts"
                 ],
                 "summary": "게시글 삭제",
                 "parameters": [
@@ -336,7 +336,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "Access Token 인증 확인",
                 "responses": {
@@ -365,7 +365,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "users"
                 ],
                 "summary": "회원가입",
                 "parameters": [

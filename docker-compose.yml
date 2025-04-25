@@ -1,6 +1,6 @@
 services:
   frontend:
-    container_name: bottrap-frontend
+    container_name: goboard-frontend
     build:
       context: ./frontend
     ports:
@@ -9,7 +9,7 @@ services:
       - backend
 
   backend:
-    container_name: bottrap-backend
+    container_name: goboard-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
       - .env:/app/.env:ro
 
   mysql:
-    container_name: bottrap-mysql
+    container_name: goboard-mysql
     image: mysql:8.0
     ports:
       - '3306:3306'
@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
 
   observer:
-    container_name: bottrap-observer
+    container_name: goboard-observer
     build:
       context: ./observer
       dockerfile: Dockerfile
@@ -51,7 +51,7 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
-    container_name: bottrap-elasticsearch
+    container_name: goboard-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -61,7 +61,7 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.12.1
-    container_name: bottrap-logstash
+    container_name: goboard-logstash
     volumes:
       - ./observer/logstash/pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./observer/logs:/usr/share/logstash/logs
@@ -72,7 +72,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.12.1
-    container_name: bottrap-kibana
+    container_name: goboard-kibana
     ports:
       - '5601:5601'
     environment:
