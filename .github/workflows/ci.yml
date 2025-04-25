@@ -10,6 +10,8 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     name: Backend Test & Build
+    outputs:
+      result: ${{ steps.set_result.outputs.result }}
 
     steps:
       - name: Checkout code
@@ -26,6 +28,7 @@ jobs:
           go mod download
 
       - name: Run tests with coverage
+        id: test
         run: |
           cd backend
           go test -coverprofile=coverage.out -coverpkg=./internal/... ./internal/tests/...
@@ -39,11 +42,23 @@ jobs:
           name: backend-tests
 
       - name: Build Docker image (test only)
+        id: build
         run: docker build -t backend:test -f backend/Dockerfile backend
+
+      - name: Set result
+        id: set_result
+        run: |
+          if [ "${{ steps.test.outcome }}" == "success" ] && [ "${{ steps.build.outcome }}" == "success" ]; then
+            echo "result=✅ Success" >> $GITHUB_OUTPUT
+          else
+            echo "result=❌ Failure" >> $GITHUB_OUTPUT
+          fi
 
   observer:
     runs-on: ubuntu-latest
     name: Observer Test & Build
+    outputs:
+      result: ${{ steps.set_result.outputs.result }}
 
     steps:
       - name: Checkout code
@@ -73,7 +88,17 @@ jobs:
       #     name: observer-tests
 
       - name: Build Docker image (test only)
+        id: build
         run: docker build -t observer:test -f observer/Dockerfile observer
+
+      - name: Set result
+        id: set_result
+        run: |
+          if [ "${{ steps.build.outcome }}" == "success" ]; then
+            echo "result=✅ Success" >> $GITHUB_OUTPUT
+          else
+            echo "result=❌ Failure" >> $GITHUB_OUTPUT
+          fi
 
   slack:
     name: Slack Notification
@@ -91,5 +116,8 @@ jobs:
             🔔 CI 결과
             - Repository: *${{ github.repository }}*
             - Branch: `${{ github.ref_name }}`
+            - Commit: `${{ github.event.head_commit.message }}`
             - Result: *${{ job.status }}*
-            - Components: `Backend`, `Observer`
+            - Components:
+              - Backend: ✅ Success
+              - Observer: ❌ Failure
