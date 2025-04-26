@@ -1,0 +1,3 @@
+aws_region    = "YOUR_REGION"
+key_pair_name = "YOUR_KEY_PAIR"
+
