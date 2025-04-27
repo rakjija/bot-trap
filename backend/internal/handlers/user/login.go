@@ -23,6 +23,7 @@ func Login(c *gin.Context) {
 	var req types.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, types.ErrorResponse{Error: err.Error()})
+		return
 	}
 
 	var user models.User

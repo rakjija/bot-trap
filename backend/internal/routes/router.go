@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	docs "github.com/rakjija/go-board/backend/docs"
 	"github.com/rakjija/go-board/backend/internal/handlers/meta"
@@ -14,6 +15,7 @@ import (
 )
 
 func InitRouter(r *gin.Engine) {
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// Middleware
 	r.Use(middleware.CORSMiddleware())

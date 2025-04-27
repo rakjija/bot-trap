@@ -3,9 +3,21 @@ services:
     container_name: goboard-frontend
     build:
       context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - ./frontend/dist:/dist
+
+  nginx:
+    container_name: goboard-nginx
+    image: nginx:latest
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - '3000:80'
     depends_on:
+      - frontend
       - backend
 
   backend:
@@ -17,6 +29,11 @@ services:
       - '8080:${BACKEND_PORT}'
     env_file:
       - .env
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - mysql
     restart: unless-stopped
@@ -39,46 +56,41 @@ services:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: unless-stopped
 
-  observer:
-    container_name: goboard-observer
-    build:
-      context: ./observer
-      dockerfile: Dockerfile
+  prometheus:
+    container_name: goboard-prometheus
+    image: prom/prometheus:latest
     volumes:
-      - ./observer/logs:/app/logs
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - '9000:9000'
+      - '9090:9090'
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
-    container_name: goboard-elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+  loki:
+    container_name: goboard-loki
+    image: grafana/loki:latest
     ports:
-      - '9200:9200'
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.12.1
-    container_name: goboard-logstash
+      - '3100:3100'
     volumes:
-      - ./observer/logstash/pipeline.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./observer/logs:/usr/share/logstash/logs
-    ports:
-      - '5044:5044'
-    depends_on:
-      - elasticsearch
+      - ./monitoring/loki-config.yaml:/etc/loki/local-config.yml
+    command: -config.file=/etc/loki/local-config.yaml
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.12.1
-    container_name: goboard-kibana
-    ports:
-      - '5601:5601'
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  promtail:
+    container_name: goboard-promtail
+    image: grafana/promtail:latest
+    volumes:
+      - ./backend/log:/var/log
+      - ./monitoring/promtail-config.yaml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
     depends_on:
-      - elasticsearch
+      - loki
+
+  grafana:
+    container_name: goboard-grafana
+    image: grafana/grafana:latest
+    ports:
+      - '3001:3000'
+    depends_on:
+      - prometheus
+      - loki
 
 volumes:
   mysql_data:

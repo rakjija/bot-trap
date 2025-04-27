@@ -23,6 +23,7 @@ func Signup(c *gin.Context) {
 	var req types.SignupRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	hashedPassword, err := utils.HashPassword(req.Password)
