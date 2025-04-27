@@ -1,0 +1,25 @@
+replicaCount: 2
+
+image:
+  repository: rakjija/goboard-backend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+env:
+  - name: MYSQL_HOST
+    value: go-board-mysql
+  - name: MYSQL_PORT
+    value: "3306"
+  - name: MYSQL_USER
+    value: goboard-user
+  - name: MYSQL_PASSWORD
+    value: goboard-pass
+  - name: MYSQL_DATABASE
+    value: goboard
+  - name: OBSERVER_ENDPOINT
+    value: http://observer:9000

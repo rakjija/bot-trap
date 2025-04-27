@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-observer
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-observer
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-observer
+    spec:
+      containers:
+        - name: observer
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end}}
