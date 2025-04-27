@@ -62,6 +62,17 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/goboard-observer:${{ github.ref_name }}
             ${{ secrets.DOCKER_USERNAME }}/goboard-observer:latest
 
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:${{ github.ref_name }}
+            ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:latest
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -80,4 +91,5 @@ jobs:
             - Tag: `${{ github.ref_name }}`
             ▸ Backend: `${{ secrets.DOCKER_USERNAME }}/goboard-backend`
             ▸ Observer: `${{ secrets.DOCKER_USERNAME }}/goboard-observer`
+            ▸ Frontend: `${{ secrets.DOCKER_USERNAME }}/goboard-frontend`
             ▸ Status: *${{ job.status }}*

@@ -100,9 +100,43 @@ jobs:
             echo "result=❌ Failure" >> $GITHUB_OUTPUT
           fi
 
+  frontend:
+    runs-on: ubuntu-latest
+    name: Frontend Test & Build
+    outputs:
+      result: ${{ steps.set_result.outputs.result }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies and build
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Build Docker image (test only)
+        id: build
+        run: docker build -t frontend:test -f frontend/Dockerfile frontend
+
+      - name: Set result
+        id: set_result
+        run: |
+          if [ "${{ steps.build.outcome }}" == "success" ]; then
+            echo "result=✅ Success" >> $GITHUB_OUTPUT
+          else
+            echo "result=❌ Failure" >> $GITHUB_OUTPUT
+          fi
+
   slack:
     name: Slack Notification
-    needs: [backend, observer]
+    needs: [backend, observer, frontend]
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:
@@ -120,3 +154,4 @@ jobs:
             - Result:
                 - Backend: ${{ needs.backend.outputs.result }}
                 - Observer: ${{ needs.observer.outputs.result }}
+                - Frontend: ${{ needs.frontend.outputs.result }}
