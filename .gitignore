@@ -10,9 +10,6 @@ coverage.out
 # Node.js
 node_modules/
 
-# Log 파일
-logs.json
-
 # .pem
 *.pem
 

@@ -54,52 +54,6 @@ jobs:
             echo "result=❌ Failure" >> $GITHUB_OUTPUT
           fi
 
-  observer:
-    runs-on: ubuntu-latest
-    name: Observer Test & Build
-    outputs:
-      result: ${{ steps.set_result.outputs.result }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24.2'
-
-      - name: Download dependencies
-        run: |
-          cd observer
-          go mod download
-
-      # - name: Run tests with coverage
-      #   run: |
-      #     cd observer
-      #     go test -coverprofile=coverage.out ./...
-
-      # - name: Upload coverage reports to Codecov
-      #   uses: codecov/codecov-action@v5
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: observer/coverage.out
-      #     flags: observer
-      #     name: observer-tests
-
-      - name: Build Docker image (test only)
-        id: build
-        run: docker build -t observer:test -f observer/Dockerfile observer
-
-      - name: Set result
-        id: set_result
-        run: |
-          if [ "${{ steps.build.outcome }}" == "success" ]; then
-            echo "result=✅ Success" >> $GITHUB_OUTPUT
-          else
-            echo "result=❌ Failure" >> $GITHUB_OUTPUT
-          fi
-
   frontend:
     runs-on: ubuntu-latest
     name: Frontend Test & Build
@@ -136,7 +90,7 @@ jobs:
 
   slack:
     name: Slack Notification
-    needs: [backend, observer, frontend]
+    needs: [backend, frontend]
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:
@@ -153,5 +107,4 @@ jobs:
             - Commit: `${{ github.event.head_commit.message }}`
             - Result:
                 - Backend: ${{ needs.backend.outputs.result }}
-                - Observer: ${{ needs.observer.outputs.result }}
                 - Frontend: ${{ needs.frontend.outputs.result }}

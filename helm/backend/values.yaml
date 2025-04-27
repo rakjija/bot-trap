@@ -22,5 +22,3 @@ env:
     value: goboard-pass
   - name: MYSQL_DATABASE
     value: goboard
-  - name: OBSERVER_ENDPOINT
-    value: http://observer:9000

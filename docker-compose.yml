@@ -77,7 +77,6 @@ services:
     container_name: goboard-promtail
     image: grafana/promtail:latest
     volumes:
-      - ./backend/log:/var/log
       - ./monitoring/promtail-config.yaml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
     depends_on:

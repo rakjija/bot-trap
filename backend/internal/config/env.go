@@ -11,7 +11,6 @@ import (
 type AppConfig struct {
 	DB     DBConfig
 	Server ServerConfig
-	Log    LogConfig
 }
 
 type DBConfig struct {
@@ -24,10 +23,6 @@ type DBConfig struct {
 
 type ServerConfig struct {
 	Port string
-}
-
-type LogConfig struct {
-	Endpoint string
 }
 
 var Config AppConfig
@@ -49,9 +44,6 @@ func LoadConfig() {
 		},
 		Server: ServerConfig{
 			Port: getEnv("BACKEND_PORT", "8080"),
-		},
-		Log: LogConfig{
-			Endpoint: getEnv("OBSERVER_ENDPOINT", "http://localhost:9090"),
 		},
 	}
 }
