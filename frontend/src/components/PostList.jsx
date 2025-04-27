@@ -1,7 +1,7 @@
 // src/components/PostList.jsx
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../api/axios'
+import instance from "../api/axios"
 import '../styles/board.css'
 
 function formatDate(dateStr) {
@@ -14,7 +14,7 @@ export default function PostList() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get('/posts')
+    instance.get('/posts')
       .then(res => setPosts(res.data.reverse())) // 최신순으로 정렬
       .catch(err => console.error('Failed to fetch posts:', err))
   }, [])

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from '../api/axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import instance from "../api/axios"
 
 export default function PostForm({ mode = 'create', onPostCreated }) {
   const navigate = useNavigate()
@@ -13,7 +13,7 @@ export default function PostForm({ mode = 'create', onPostCreated }) {
   // 수정 모드일 경우 기존 데이터 로드
   useEffect(() => {
     if (mode === 'edit' && id) {
-      axios.get(`/posts/${id}`)
+      instance.get(`/posts/${id}`)
         .then(res => {
           setTitle(res.data.title)
           setContent(res.data.content)
@@ -25,10 +25,10 @@ export default function PostForm({ mode = 'create', onPostCreated }) {
   const handleSubmit = async () => {
     try {
       if (mode === 'edit') {
-        await axios.put(`/posts/${id}`, { title, content })
+        await instance.put(`/posts/${id}`, { title, content })
         navigate(`/posts/${id}`)
       } else {
-        await axios.post('/posts', { title, content })
+        await instance.post('/posts', { title, content })
         setTitle('')
         setContent('')
         setError(null)

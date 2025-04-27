@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import axios from '../api/axios'
 import { useNavigate } from 'react-router-dom'
+import instance from "../api/axios"
 
 
 export default function LoginForm({ onLogin }) {
@@ -11,7 +11,7 @@ export default function LoginForm({ onLogin }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('/users/login', { email, password })
+      const res = await instance.post('/users/login', { email, password })
       localStorage.setItem('access_token', res.data.access_token)
       localStorage.setItem('user_id', res.data.user_id)
       setError(null)

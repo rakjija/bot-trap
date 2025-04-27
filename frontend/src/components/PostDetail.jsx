@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from '../api/axios'
+import instance from "../api/axios"
 
 export default function PostDetail() {
   const { id } = useParams()
@@ -11,7 +11,7 @@ export default function PostDetail() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    axios.get(`/posts/${id}`)
+    instance.get(`/posts/${id}`)
       .then(res => setPost(res.data))
       .catch(() => setError('글을 불러오지 못했습니다.'))
   }, [id])
@@ -21,7 +21,7 @@ export default function PostDetail() {
     if (!confirmDelete) return
 
     try {
-      await axios.delete(`/posts/${id}`)
+      await instance.delete(`/posts/${id}`)
       navigate('/')
     } catch (err) {
       console.error(err)

@@ -1,7 +1,7 @@
 // src/components/SignupForm.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../api/axios'
+import instance from "../api/axios"
 
 export default function SignupForm() {
   const [email, setEmail] = useState('')
@@ -12,7 +12,7 @@ export default function SignupForm() {
 
   const handleSignup = async () => {
     try {
-      await axios.post('/users/signup', { email, username, password })
+      await instance.post('/users/signup', { email, username, password })
       setError(null)
       alert('회원가입 성공! 이제 로그인하세요.')
       navigate('/') // 로그인 화면으로
