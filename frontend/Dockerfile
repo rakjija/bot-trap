@@ -4,5 +4,5 @@ COPY . .
 RUN npm install && npm run build
 
 FROM nginx:latest
-COPY dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
