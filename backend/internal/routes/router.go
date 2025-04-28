@@ -2,7 +2,6 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	docs "github.com/rakjija/go-board/backend/docs"
 	"github.com/rakjija/go-board/backend/internal/handlers/meta"
@@ -12,13 +11,16 @@ import (
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
 func InitRouter(r *gin.Engine) {
-	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
-
-	// Middleware
+	// CORS Middleware
 	r.Use(middleware.CORSMiddleware())
+
+	// Prometheus Middleware
+	p := ginprometheus.NewPrometheus("backend")
+	p.Use(r)
 
 	r.OPTIONS("/*path", func(c *gin.Context) {
 		c.Status(200)
