@@ -3,7 +3,7 @@ services:
     container_name: goboard-frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.compose
     ports:
       - '3000:80'
     depends_on:
