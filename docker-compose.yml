@@ -87,6 +87,8 @@ services:
   grafana:
     container_name: goboard-grafana
     image: grafana/grafana:latest
+    volumes:
+      - grafana-data:/var/lib/grafana
     ports:
       - '3001:3000'
     depends_on:
@@ -95,3 +97,4 @@ services:
 
 volumes:
   mysql_data:
+  grafana-data:
