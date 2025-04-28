@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 모든 커밋 히스토리를 가져와야 git push 가능
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -61,6 +63,10 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:${{ github.ref_name }}
             ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:latest
+
+      - name: Check out main branch
+        run: |
+          git checkout main
 
       - name: Update Helm values.yaml (frontend/backend)
         run: |
