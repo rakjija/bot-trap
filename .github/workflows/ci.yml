@@ -77,7 +77,7 @@ jobs:
 
       - name: Build Docker image (test only)
         id: build
-        run: docker build -t frontend:test -f frontend/Dockerfile frontend
+        run: docker build -t frontend:test -f frontend/Dockerfile.k8s frontend
 
       - name: Set result
         id: set_result
