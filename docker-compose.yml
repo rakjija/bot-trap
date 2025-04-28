@@ -10,10 +10,9 @@ services:
 
   nginx:
     container_name: goboard-nginx
-    image: nginx:latest
-    volumes:
-      - ./frontend/dist:/usr/share/nginx/html
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - '3000:80'
     depends_on:
