@@ -21,16 +21,19 @@ import (
 // @in header
 // @name Authorization
 func main() {
+	utils.InitLogger()
+
 	config.LoadConfig()
 
 	db.Connect()
 	db.Migrate()
 
 	r := gin.Default()
-
 	routes.InitRouter(r)
 	utils.RegisterCustomValidators()
-	r.Run(":8080")
 
+	if err := r.Run(":8080"); err != nil {
+		log.Fatalf("[ERROR] Failed to start server: %v", err)
+	}
 	log.Printf("[INFO] Server is running on %s..", config.Config.Server.Port)
 }
