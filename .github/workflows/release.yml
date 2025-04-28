@@ -51,16 +51,16 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/goboard-backend:${{ github.ref_name }}
             ${{ secrets.DOCKER_USERNAME }}/goboard-backend:latest
 
-      - name: Build and push frontend image
+      - name: Build and push nginx image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
+          context: ./nginx
+          file: ./nginx/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:${{ github.ref_name }}
-            ${{ secrets.DOCKER_USERNAME }}/goboard-frontend:latest
+            ${{ secrets.DOCKER_USERNAME }}/goboard-nginx:${{ github.ref_name }}
+            ${{ secrets.DOCKER_USERNAME }}/goboard-nginx:latest
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -79,5 +79,5 @@ jobs:
             - Repository: *${{ github.repository }}*
             - Tag: `${{ github.ref_name }}`
             ▸ Backend: `${{ secrets.DOCKER_USERNAME }}/goboard-backend`
-            ▸ Frontend: `${{ secrets.DOCKER_USERNAME }}/goboard-frontend`
+            ▸ Nginx: `${{ secrets.DOCKER_USERNAME }}/goboard-nginx`
             ▸ Status: *${{ job.status }}*
