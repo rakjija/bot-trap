@@ -1,3 +1,5 @@
+.DS_Store
+
 # 테스트 커버리지 결과
 coverage.out
 
