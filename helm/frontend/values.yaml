@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: rakjija/goboard-frontend
-  tag: v1.1.7
+  tag: v1.1.9
   pullPolicy: IfNotPresent
 
 service:
